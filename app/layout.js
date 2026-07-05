@@ -13,8 +13,8 @@ import Header from "./_components/Header";
 
 export const metadata = {
   title: {
-    template: "%s / The Wild Oasis",
-    default: "Welcome / The Wild Oasis",
+    template: "%s | The Wild Oasis",
+    default: "Welcome | The Wild Oasis",
   },
   description:
     "Luxurious cabin hotel, located in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests",
