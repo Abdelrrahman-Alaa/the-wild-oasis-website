@@ -1,13 +1,12 @@
 import { eachDayOfInterval } from "date-fns";
 import { createClient } from "@/app/_lib/supabase/server";
+import { supabasePublic } from "@/app/_lib/supabase/public";
 
 /////////////
 // GET
 
 export async function getCabin(id) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from("cabins")
     .select("*")
     .eq("id", id)
@@ -24,9 +23,7 @@ export async function getCabin(id) {
 }
 
 export async function getCabinPrice(id) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from("cabins")
     .select("regularPrice, discount")
     .eq("id", id)
@@ -40,9 +37,7 @@ export async function getCabinPrice(id) {
 }
 
 export const getCabins = async function () {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from("cabins")
     .select("id, name, maxCapacity, regularPrice, discount, image")
     .order("name");
@@ -107,14 +102,12 @@ export async function getBookings(guestId) {
 }
 
 export async function getBookedDatesByCabinId(cabinId) {
-  const supabase = await createClient();
-
   let today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString();
 
   // Getting all bookings
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from("bookings")
     .select("*")
     .eq("cabinId", cabinId)
@@ -139,9 +132,10 @@ export async function getBookedDatesByCabinId(cabinId) {
 }
 
 export async function getSettings() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.from("settings").select("*").single();
+  const { data, error } = await supabasePublic
+    .from("settings")
+    .select("*")
+    .single();
 
   if (error) {
     console.error(error);
