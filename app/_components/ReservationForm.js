@@ -1,15 +1,17 @@
 "use client";
 
+import { format } from "date-fns";
 import { useReservation } from "./ReservationContext";
 
 function ReservationForm({ cabin }) {
   const { range } = useReservation();
   const { maxCapacity } = cabin;
+  const hasSelectedDates = range.from && range.to;
 
   return (
-    <div className="scale-[1.01]">
-      <div className="bg-primary-800 text-primary-300 flex items-center justify-between px-16 py-2">
-        <p>Logged in as</p>
+    <div className="border-primary-800 flex min-w-0 flex-col border-t xl:border-t-0 xl:border-l">
+      <div className="bg-primary-800 text-primary-200 flex min-h-12 items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
+        <p className="text-sm sm:text-base">Logged in as</p>
 
         {/* <div className='flex gap-4 items-center'>
           <img
@@ -23,17 +25,24 @@ function ReservationForm({ cabin }) {
         </div> */}
       </div>
 
-      <p>
-        {String(range.from)} to {String(range.to)}
-      </p>
+      <div className="bg-primary-950 text-primary-300 border-primary-800 border-b px-5 py-3 text-sm sm:px-8 lg:px-12">
+        {hasSelectedDates ? (
+          <p>
+            Your stay: {format(range.from, "MMM dd, yyyy")} &ndash;{" "}
+            {format(range.to, "MMM dd, yyyy")}
+          </p>
+        ) : (
+          <p>Select your arrival and departure dates from the calendar.</p>
+        )}
+      </div>
 
-      <form className="bg-primary-900 flex flex-col gap-5 px-16 py-10 text-lg">
+      <form className="bg-primary-900 flex flex-1 flex-col gap-6 px-5 py-7 text-base sm:px-8 sm:py-9 lg:px-12 lg:py-10 lg:text-lg">
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select
             name="numGuests"
             id="numGuests"
-            className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
+            className="bg-primary-100 text-primary-900 focus:ring-accent-500 w-full rounded-sm border border-transparent px-4 py-3 shadow-sm transition outline-none focus:ring-2"
             required
           >
             <option value="" key="">
@@ -54,15 +63,22 @@ function ReservationForm({ cabin }) {
           <textarea
             name="observations"
             id="observations"
-            className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
+            className="bg-primary-100 text-primary-900 focus:ring-accent-500 min-h-32 w-full resize-y rounded-sm border border-transparent px-4 py-3 shadow-sm transition outline-none focus:ring-2"
             placeholder="Any pets, allergies, special requirements, etc.?"
           />
         </div>
 
-        <div className="flex items-center justify-end gap-6">
-          <p className="text-primary-300 text-base">Start by selecting dates</p>
+        <div className="mt-auto flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end sm:gap-6">
+          {!hasSelectedDates && (
+            <p className="text-primary-300 text-sm sm:text-base">
+              Start by selecting dates
+            </p>
+          )}
 
-          <button className="bg-accent-500 text-primary-800 hover:bg-accent-600 px-8 py-4 font-semibold transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
+          <button
+            disabled={!hasSelectedDates}
+            className="bg-accent-500 text-primary-900 hover:bg-accent-600 w-full px-6 py-3.5 font-semibold transition-all disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-300 sm:w-auto sm:px-8 sm:py-4"
+          >
             Reserve now
           </button>
         </div>

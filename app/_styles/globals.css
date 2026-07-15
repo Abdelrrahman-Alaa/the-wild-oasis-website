@@ -54,11 +54,43 @@
   }
 }
 
-/* For data picker */
+/* Reservation date picker */
 
-.rdp {
-  --rdp-cell-size: 32px !important;
-  --rdp-accent-color: var(--color-accent-500) !important;
-  --rdp-background-color: var(--color-accent-600) !important;
-  margin: 0 !important;
+.reservation-calendar.rdp-root {
+  --rdp-accent-color: var(--color-accent-500);
+  --rdp-accent-background-color: var(--color-accent-600);
+  --rdp-day-height: 38px;
+  --rdp-day-width: 38px;
+  --rdp-day_button-height: 36px;
+  --rdp-day_button-width: 36px;
+  --rdp-months-gap: 1rem;
+  margin: 0;
+}
+
+.reservation-calendar .rdp-dropdown {
+  background-color: var(--color-primary-100);
+  padding: 1rem;
+}
+
+.reservation-calendar .rdp-dropdown option {
+  color: var(--color-primary-950);
+}
+
+.reservation-calendar .rdp-months {
+  width: max-content;
+  margin-inline: auto;
+  flex-flow: row nowrap;
+}
+
+@media (max-width: 767px) {
+  .reservation-calendar.rdp-root {
+    --rdp-day-height: 36px;
+    --rdp-day-width: 36px;
+    --rdp-day_button-height: 34px;
+    --rdp-day_button-width: 34px;
+  }
+
+  .reservation-calendar .rdp-months {
+    flex-flow: column nowrap;
+  }
 }
