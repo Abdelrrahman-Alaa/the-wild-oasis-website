@@ -34,7 +34,7 @@ export default async function Page({ params }) {
   return (
     <div className="mx-auto mt-2 max-w-6xl sm:mt-6 lg:mt-8">
       <div className="border-primary-800 mb-16 grid overflow-hidden border md:grid-cols-[minmax(0,3fr)_minmax(0,4fr)] lg:mb-24 lg:overflow-visible">
-        <div className="relative aspect-[4/3] md:aspect-auto md:min-h-105 lg:-translate-x-3 lg:scale-[1.08]">
+        <div className="relative aspect-4/3 md:aspect-auto md:min-h-105 lg:-translate-x-3 lg:scale-[1.08]">
           <Image
             src={image}
             fill
