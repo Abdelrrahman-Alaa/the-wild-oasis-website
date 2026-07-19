@@ -2,8 +2,9 @@
 
 import { format } from "date-fns";
 import { useReservation } from "./ReservationContext";
+import Image from "next/image";
 
-function ReservationForm({ cabin }) {
+function ReservationForm({ cabin, user }) {
   const { range } = useReservation();
   const { maxCapacity } = cabin;
   const hasSelectedDates = range.from && range.to;
@@ -11,18 +12,20 @@ function ReservationForm({ cabin }) {
   return (
     <div className="border-primary-800 flex min-w-0 flex-col border-t xl:border-t-0 xl:border-l">
       <div className="bg-primary-800 text-primary-200 flex min-h-12 items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
-        <p className="text-sm sm:text-base">Logged in as</p>
+        <p className="text-sm sm:text-base">Logged in as </p>
 
-        {/* <div className='flex gap-4 items-center'>
-          <img
+        <div className="flex items-center gap-2">
+          <Image
             // Important to display google profile images
-            referrerPolicy='no-referrer'
-            className='h-8 rounded-full'
+            referrerPolicy="no-referrer"
+            className="rounded-full"
+            width={20}
+            height={20}
             src={user.image}
             alt={user.name}
           />
           <p>{user.name}</p>
-        </div> */}
+        </div>
       </div>
 
       <div className="bg-primary-950 text-primary-300 border-primary-800 border-b px-5 py-3 text-sm sm:px-8 lg:px-12">
