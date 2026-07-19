@@ -2,6 +2,7 @@ import { eachDayOfInterval } from "date-fns";
 import { createClient } from "@/app/_lib/supabase/server";
 import { supabasePublic } from "@/app/_lib/supabase/public";
 import { notFound } from "next/navigation";
+import { createAdminClient } from "./supabase/admin";
 
 /////////////
 // GET
@@ -54,13 +55,18 @@ export const getCabins = async function () {
 
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   const { data, error } = await supabase
     .from("guests")
     .select("*")
     .eq("email", email)
-    .single();
+    .maybeSingle();
+
+     if (error) {
+    console.error(error);
+    throw new Error("Guest could not be loaded");
+  }
 
   // No error here! We handle the possibility of no guest in the sign in callback
   return data;
@@ -177,14 +183,19 @@ export async function getCountries() {
 // CREATE
 
 export async function createGuest(newGuest) {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
-  const { data, error } = await supabase.from("guests").insert([newGuest]);
+ const { data, error } = await supabase
+    .from("guests")
+    .insert(newGuest)
+    .select()
+    .single();
 
   if (error) {
     console.error(error);
     throw new Error("Guest could not be created");
   }
+
 
   return data;
 }

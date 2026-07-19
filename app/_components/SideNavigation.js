@@ -47,10 +47,8 @@ function SideNavigation() {
           </li>
         ))}
 
-        <li className="mt-auto cursor-pointer">
-          <Link href={"/"} className="cursor-pointer">
-            <SignOutButton />
-          </Link>
+        <li className="mt-auto">
+          <SignOutButton />
         </li>
       </ul>
     </nav>

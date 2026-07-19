@@ -1,13 +1,7 @@
-import { updateSession } from "@/app/_lib/supabase/middleware";
+import { auth } from "@/app/_lib/auth";
 
-export async function proxy(request) {
-  console.log(request);
-
-  return await updateSession(request);
-}
+export const proxy = auth;
 
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
+  matcher: ["/account/:path*"],
 };
