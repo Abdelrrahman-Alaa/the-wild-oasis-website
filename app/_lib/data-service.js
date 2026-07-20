@@ -55,7 +55,7 @@ export const getCabins = async function () {
 
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
-  const supabase = await createAdminClient();
+  const supabase = createAdminClient();
 
   const { data, error } = await supabase
     .from("guests")
@@ -63,7 +63,7 @@ export async function getGuest(email) {
     .eq("email", email)
     .maybeSingle();
 
-     if (error) {
+  if (error) {
     console.error(error);
     throw new Error("Guest could not be loaded");
   }
@@ -165,11 +165,7 @@ export async function getCountries() {
       .filter(([code]) => code.length === 2)
       .map(([code, name]) => ({
         name,
-        flag: code
-          .toUpperCase()
-          .replace(/./g, (char) =>
-            String.fromCodePoint(127397 + char.charCodeAt()),
-          ),
+        flag: code.toLowerCase(),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
@@ -183,9 +179,9 @@ export async function getCountries() {
 // CREATE
 
 export async function createGuest(newGuest) {
-  const supabase = await createAdminClient();
+  const supabase = createAdminClient();
 
- const { data, error } = await supabase
+  const { data, error } = await supabase
     .from("guests")
     .insert(newGuest)
     .select()
@@ -195,7 +191,6 @@ export async function createGuest(newGuest) {
     console.error(error);
     throw new Error("Guest could not be created");
   }
-
 
   return data;
 }
